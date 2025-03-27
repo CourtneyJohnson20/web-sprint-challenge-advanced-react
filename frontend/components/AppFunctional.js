@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-// Suggested initial states
 const initialMessage = '';
 const initialEmail = '';
 const initialSteps = 0;
-const initialIndex = 4; // the index the "B" is at
+const initialIndex = 4; 
 
 let x = 2;
 let y = 2;
@@ -17,12 +16,9 @@ export default function AppFunctional(props) {
     vEmail: '',
     vSteps: 0,
     vIndex: 4,
-    success: '',
-    failure: '',
     vCoordMessage: ''
   });
 
-  // This function will update coordMessage based on current index
   function updateCoordMessage() {
     const result = getXY(values.vIndex);
     const coordMessage = `Coordinates ${result}`;
@@ -37,20 +33,18 @@ export default function AppFunctional(props) {
     }));
   }
 
-  // Update coordMessage whenever state changes
+
   useEffect(() => {
     updateCoordMessage();
-  }, [values.vIndex]); // Re-run when vIndex changes
+  }, [values.vIndex]); 
 
   function getXY(coordinate) {
-    // Adjust grid coordinates for 0-based index system
     const grid = [
       '(1, 1)', '(2, 1)', '(3, 1)',
       '(1, 2)', '(2, 2)', '(3, 2)',
       '(1, 3)', '(2, 3)', '(3, 3)'
     ];
     
-    // Get the (x, y) coordinates based on the index
     return grid[coordinate];
   }
 
@@ -108,7 +102,7 @@ export default function AppFunctional(props) {
       setValues(prevValues => ({
         ...prevValues,
         vIndex: newIndex,
-        vSteps: prevValues.vSteps + 1 // Increment step counter
+        vSteps: prevValues.vSteps + 1
       }));
     }
   }
@@ -138,7 +132,6 @@ export default function AppFunctional(props) {
       setValues(prevValues => ({
         ...prevValues, vMessage: res.response.data.message
       }));
-      debugger;
     });
   }
 
@@ -148,8 +141,9 @@ export default function AppFunctional(props) {
   }
 
   function onSubmit(evt) {
-    evt.preventDefault();
-  
+  evt.preventDefault();
+
+
     if (values.vEmail === '') {
       setValues(prevValues => ({
         ...prevValues,
@@ -157,15 +151,15 @@ export default function AppFunctional(props) {
       }));
       return; 
     }
-  
+
+
     if (values.vEmail === 'foo@bar.baz') {
       setValues({
         ...values, 
         vMessage: 'foo@bar.baz failure #71'
-      });
+    });
       return; 
     }
-  
 
     if (!isEmailValid(values.vEmail)) {
       setValues(prevValues => ({
@@ -174,30 +168,16 @@ export default function AppFunctional(props) {
       }));
       return; 
     }
-  
-    setValues(prevValues => ({
-      ...prevValues,
-      vMessage: '',
-      vEmail: ''
-    }));
-  
-    submit();
-  }
-  
-    
 
     setValues(prevValues => ({
       ...prevValues,
       vMessage: '',
       vEmail: ''
-
     }));
-    
 
-    submit();
-  
-  
+    submit(); 
   }
+
 
   return (
     <div id="wrapper" className={props.className}>
